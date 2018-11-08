@@ -1,0 +1,9 @@
+SERVER=irc.kernelpanic.com.ar
+PORT=6667
+SECURE=false
+PASSWORD=
+LOGIN=Librebot
+NICK=Librebot
+NICKSERV_PASSWORD=
+CHANNELS=#debug
+REVO_PATH=
