@@ -7,3 +7,4 @@ NICK=Librebot
 NICKSERV_PASSWORD=
 CHANNELS=#debug
 REVO_PATH=
+RSS_FEED_URLS=https://stallman.org/rss/rss.xml

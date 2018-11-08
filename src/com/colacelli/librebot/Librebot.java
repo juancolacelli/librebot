@@ -6,8 +6,8 @@ import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
 import com.colacelli.ircbot.plugins.esperantotranslator.EsperantoTranslatorPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
-import com.colacelli.ircbot.plugins.operator.OperatorPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
+import com.colacelli.ircbot.plugins.rssfeed.RssFeedPlugin;
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin;
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin;
 import com.colacelli.irclib.actors.Channel;
@@ -81,10 +81,11 @@ public class Librebot {
         bot.addPlugin(new RejoinOnKickPlugin());
         bot.addPlugin(new NickServPlugin(properties.getProperty("NICKSERV_PASSWORD")));
         bot.addPlugin(new WebsiteTitlePlugin());
+        bot.addPlugin(new RssFeedPlugin(properties.getProperty("RSS_FEED_URLS").split(",")));
 
         // Commands
+        // bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new UptimePlugin());
-        bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new EsperantoTranslatorPlugin(properties.getProperty("REVO_PATH")));
 
         // Help
