@@ -3,6 +3,7 @@ PORT=6667
 SECURE=false
 PASSWORD=
 LOGIN=Librebot
+REAL_NAME=Librebot - https://gitlab.com/jic/librebot
 NICK=Librebot
 NICKSERV_PASSWORD=
 CHANNELS=#debug

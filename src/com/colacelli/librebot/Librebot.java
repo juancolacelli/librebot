@@ -53,7 +53,8 @@ public class Librebot {
         User.Builder userBuilder = new User.Builder();
         userBuilder
                 .setNick(properties.getProperty("NICK"))
-                .setLogin(properties.getProperty("LOGIN"));
+                .setLogin(properties.getProperty("LOGIN"))
+                .setRealName(properties.getProperty("REAL_NAME"));
 
         return userBuilder.build();
     }

@@ -13,8 +13,9 @@ You need to rename librebot.properties.sample as librebot.properties
 * **PORT**: IRC server port
 * **SECURE**: Activate/Deactivate SSL
 * **PASSWORD**: IRC server password
-* **LOGIN**: IRCBot login
-* **NICK**: IRCBot nick
+* **LOGIN**: Login
+* **REAL_NAME**: Realname
+* **NICK**: Nick
 * **NICKSERV_PASSWORD**: NickServ authentication password
 * **CHANNELS**: Channels to auto-join (comma separated without spaces)
 * **REVO_PATH**: Unzipped revo path
