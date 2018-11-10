@@ -19,4 +19,4 @@ You need to rename librebot.properties.sample as librebot.properties
 * **NICKSERV_PASSWORD**: NickServ authentication password
 * **CHANNELS**: Channels to auto-join (comma separated without spaces)
 * **REVO_PATH**: Unzipped revo path
-* **RSS_FEED_URLS**: RSS feed urls to read from
+* **RSS_FEED_URLS**: RSS feed urls to read from (comma separated without spaces)
