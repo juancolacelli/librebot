@@ -3,6 +3,7 @@
 ## Dependencies
 * **irclib**: https://gitlab.com/jic/irclib
 * **ircbot**: https://gitlab.com/jic/ircbot
+* **json-simple**: https://code.google.com/archive/p/json-simple/
 
 ### Configuration
 #### librebot.properties
