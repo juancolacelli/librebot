@@ -3,11 +3,11 @@ package com.colacelli.librebot;
 import com.colacelli.ircbot.IRCBot;
 import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin;
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
-import com.colacelli.ircbot.plugins.esperantotranslator.EsperantoTranslatorPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
 import com.colacelli.ircbot.plugins.rssfeed.RssFeedPlugin;
+import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin;
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin;
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin;
 import com.colacelli.irclib.actors.Channel;
@@ -35,7 +35,6 @@ public class Librebot {
 
     public static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
     public static final String PROPERTIES_RSS_FEED_URLS = "rss_feed_urls";
-    public static final String PROPERTIES_REVO_PATH = "revo_path";
 
     public static void main(String[] args) {
         Properties properties = loadProperties(PROPERTIES_FILE);
@@ -103,11 +102,9 @@ public class Librebot {
         if (!rssFeedUrls.isEmpty()) bot.addPlugin(new RssFeedPlugin(rssFeedUrls.split(",")));
 
         // Commands
-        // bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new UptimePlugin());
-
-        String revoPath = properties.getProperty(PROPERTIES_REVO_PATH);
-        if (!revoPath.isEmpty()) bot.addPlugin(new EsperantoTranslatorPlugin(revoPath));
+        // bot.addPlugin(new OperatorPlugin());
+        bot.addPlugin(new ApertiumTranslatePlugin());
 
         // Help
         bot.addPlugin(new HelpPlugin());
