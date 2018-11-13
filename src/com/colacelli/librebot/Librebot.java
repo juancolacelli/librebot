@@ -1,15 +1,15 @@
 package com.colacelli.librebot;
 
 import com.colacelli.ircbot.IRCBot;
+import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin;
 import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin;
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
+import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
 import com.colacelli.ircbot.plugins.rssfeed.RssFeedPlugin;
-import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin;
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin;
-import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin;
 import com.colacelli.irclib.actors.Channel;
 import com.colacelli.irclib.actors.User;
@@ -21,22 +21,18 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class Librebot {
-    private static final String PROPERTIES_FILE = "librebot.properties";
-
     public static final String PROPERTIES_SERVER = "server";
     public static final String PROPERTIES_PORT = "port";
     public static final String PROPERTIES_SSL = "ssl";
     public static final String PROPERTIES_PASSWORD = "password";
-
     public static final String PROPERTIES_IDENT = "ident";
     public static final String PROPERTIES_REAL_NAME = "real_name";
     public static final String PROPERTIES_NICK = "nick";
-
     public static final String PROPERTIES_CHANNELS = "channels";
-
     public static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
     public static final String PROPERTIES_CTCP_VERSION = "ctcp_version";
     public static final String PROPERTIES_RSS_FEED_URLS = "rss_feed_urls";
+    private static final String PROPERTIES_FILE = "librebot.properties";
 
     public static void main(String[] args) {
         Properties properties = loadProperties(PROPERTIES_FILE);
