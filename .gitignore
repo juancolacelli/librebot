@@ -27,4 +27,4 @@ hs_err_pid*
 */META-INF/*
 
 # Secret
-src/com/colacelli/librebot/librebot.properties
+librebot.properties

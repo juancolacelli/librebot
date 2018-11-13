@@ -14,13 +14,28 @@ import com.colacelli.irclib.actors.Channel;
 import com.colacelli.irclib.actors.User;
 import com.colacelli.irclib.connection.Server;
 
+import java.io.FileInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Properties;
 
 public class Librebot {
-    private static final String PROPERTIES_FILE = "com/colacelli/librebot/librebot.properties";
+    private static final String PROPERTIES_FILE = "librebot.properties";
+
+    public static final String PROPERTIES_SERVER = "server";
+    public static final String PROPERTIES_PORT = "port";
+    public static final String PROPERTIES_SSL = "ssl";
+    public static final String PROPERTIES_PASSWORD = "password";
+
+    public static final String PROPERTIES_IDENT = "ident";
+    public static final String PROPERTIES_REAL_NAME = "real_name";
+    public static final String PROPERTIES_NICK = "nick";
+
+    public static final String PROPERTIES_CHANNELS = "channels";
+
+    public static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
+    public static final String PROPERTIES_RSS_FEED_URLS = "rss_feed_urls";
+    public static final String PROPERTIES_REVO_PATH = "revo_path";
 
     public static void main(String[] args) {
         Properties properties = loadProperties(PROPERTIES_FILE);
@@ -36,12 +51,11 @@ public class Librebot {
     }
 
     private static Properties loadProperties(String propertiesFile) {
-        InputStream inputStream;
-        inputStream = ClassLoader.getSystemResourceAsStream(propertiesFile);
-
         Properties properties = new Properties();
+
         try {
-            properties.load(inputStream);
+            FileInputStream fileInputStream = new FileInputStream(PROPERTIES_FILE);
+            properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -52,9 +66,9 @@ public class Librebot {
     private static User buildUser(Properties properties) {
         User.Builder userBuilder = new User.Builder();
         userBuilder
-                .setNick(properties.getProperty("NICK"))
-                .setLogin(properties.getProperty("LOGIN"))
-                .setRealName(properties.getProperty("REAL_NAME"));
+                .setNick(properties.getProperty(PROPERTIES_NICK))
+                .setLogin(properties.getProperty(PROPERTIES_IDENT))
+                .setRealName(properties.getProperty(PROPERTIES_REAL_NAME));
 
         return userBuilder.build();
     }
@@ -62,17 +76,17 @@ public class Librebot {
     private static Server buildServer(Properties properties) {
         Server.Builder serverBuilder = new Server.Builder();
         serverBuilder
-                .setHostname(properties.getProperty("SERVER"))
-                .setPort(Integer.parseInt(properties.getProperty("PORT")))
-                .setSecure(Boolean.parseBoolean(properties.getProperty("SECURE")))
-                .setPassword(properties.getProperty("PASSWORD"));
+                .setHostname(properties.getProperty(PROPERTIES_SERVER))
+                .setPort(Integer.parseInt(properties.getProperty(PROPERTIES_PORT)))
+                .setSecure(Boolean.parseBoolean(properties.getProperty(PROPERTIES_SSL)))
+                .setPassword(properties.getProperty(PROPERTIES_PASSWORD));
 
         return serverBuilder.build();
     }
 
     private static void addPlugins(IRCBot bot, Properties properties) {
         ArrayList<Channel> channels = new ArrayList<>();
-        for (String channel : properties.getProperty("CHANNELS").split(",")) {
+        for (String channel : properties.getProperty(PROPERTIES_CHANNELS).split(",")) {
             channels.add(new Channel(channel));
         }
 
@@ -80,14 +94,20 @@ public class Librebot {
         bot.addPlugin(new AutoReconnectPlugin());
         bot.addPlugin(new AutoJoinPlugin(channels));
         bot.addPlugin(new RejoinOnKickPlugin());
-        bot.addPlugin(new NickServPlugin(properties.getProperty("NICKSERV_PASSWORD")));
         bot.addPlugin(new WebsiteTitlePlugin());
-        bot.addPlugin(new RssFeedPlugin(properties.getProperty("RSS_FEED_URLS").split(",")));
+
+        String nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD);
+        if (!nickservPassword.isEmpty()) bot.addPlugin(new NickServPlugin(nickservPassword));
+
+        String rssFeedUrls = properties.getProperty(PROPERTIES_RSS_FEED_URLS);
+        if (!rssFeedUrls.isEmpty()) bot.addPlugin(new RssFeedPlugin(rssFeedUrls.split(",")));
 
         // Commands
         // bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new UptimePlugin());
-        bot.addPlugin(new EsperantoTranslatorPlugin(properties.getProperty("REVO_PATH")));
+
+        String revoPath = properties.getProperty(PROPERTIES_REVO_PATH);
+        if (!revoPath.isEmpty()) bot.addPlugin(new EsperantoTranslatorPlugin(revoPath));
 
         // Help
         bot.addPlugin(new HelpPlugin());

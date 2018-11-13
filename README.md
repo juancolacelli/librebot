@@ -9,14 +9,14 @@
 #### librebot.properties
 You need to rename librebot.properties.sample as librebot.properties
 
-* **SERVER**: IRC server hostname
-* **PORT**: IRC server port
-* **SECURE**: Activate/Deactivate SSL
-* **PASSWORD**: IRC server password
-* **LOGIN**: Login
-* **REAL_NAME**: Realname
-* **NICK**: Nick
-* **NICKSERV_PASSWORD**: NickServ authentication password
-* **CHANNELS**: Channels to auto-join (comma separated without spaces)
-* **REVO_PATH**: Unzipped revo path
-* **RSS_FEED_URLS**: RSS feed urls to read from (comma separated without spaces)
+* **server**: IRC server hostname
+* **port**: IRC server port
+* **ssl**: Activate/Deactivate SSL
+* **password**: IRC server password
+* **ident**: Ident
+* **real_name**: Real name
+* **nick**: Nick
+* **channels**: Channels to auto-join (comma separated without spaces)
+* **nickserv_password**: NickServ authentication password
+* **rss_feed_urls**: RSS feed urls to read from (comma separated without spaces)
+* **revo_path**: Unzipped revo path

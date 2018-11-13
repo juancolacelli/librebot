@@ -1,0 +1,11 @@
+server=irc.kernelpanic.com.ar
+port=6697
+ssl=true
+password=
+ident=librebot
+real_name=Librebot - https://gitlab.com/jic/librebot
+nick=librebot
+channels=#debug
+nickserv_password=
+rss_feed_urls=https://stallman.org/rss/rss.xml
+revo_path=
