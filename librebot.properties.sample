@@ -7,4 +7,5 @@ real_name=Librebot - https://gitlab.com/jic/librebot
 nick=librebot
 channels=#debug
 nickserv_password=
+ctcp_version=Librebot - https://gitlab.com/jic/librebot
 rss_feed_urls=https://stallman.org/rss/rss.xml

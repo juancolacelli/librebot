@@ -17,5 +17,6 @@ You need to rename librebot.properties.sample as librebot.properties
 * **real_name**: Real name
 * **nick**: Nick
 * **channels**: Channels to auto-join (comma separated without spaces)
+* **ctcp_version**: CTCP Version response
 * **nickserv_password**: NickServ authentication password
 * **rss_feed_urls**: RSS feed urls to read from (comma separated without spaces)

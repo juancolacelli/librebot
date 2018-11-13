@@ -9,6 +9,7 @@ import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
 import com.colacelli.ircbot.plugins.rssfeed.RssFeedPlugin;
 import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin;
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin;
+import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin;
 import com.colacelli.irclib.actors.Channel;
 import com.colacelli.irclib.actors.User;
@@ -34,6 +35,7 @@ public class Librebot {
     public static final String PROPERTIES_CHANNELS = "channels";
 
     public static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
+    public static final String PROPERTIES_CTCP_VERSION = "ctcp_version";
     public static final String PROPERTIES_RSS_FEED_URLS = "rss_feed_urls";
 
     public static void main(String[] args) {
@@ -94,6 +96,8 @@ public class Librebot {
         bot.addPlugin(new AutoJoinPlugin(channels));
         bot.addPlugin(new RejoinOnKickPlugin());
         bot.addPlugin(new WebsiteTitlePlugin());
+
+        bot.addPlugin(new CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)));
 
         String nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD);
         if (!nickservPassword.isEmpty()) bot.addPlugin(new NickServPlugin(nickservPassword));
