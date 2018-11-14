@@ -1,8 +1,8 @@
 # GNU Librebot
 
 ## Dependencies
-* **irclib**: https://gitlab.com/jic/irclib
-* **ircbot**: https://gitlab.com/jic/ircbot
+* **GNU IRC Library**: https://gitlab.com/jic/irclib
+* **GNU IRC Bot**: https://gitlab.com/jic/ircbot
 * **json-simple**: https://code.google.com/archive/p/json-simple/
 
 ### Configuration
@@ -19,4 +19,3 @@ You need to rename librebot.properties.sample as librebot.properties
 * **channels**: Channels to auto-join (comma separated without spaces)
 * **ctcp_version**: CTCP Version response
 * **nickserv_password**: NickServ authentication password
-* **rss_feed_urls**: RSS feed urls to read from (comma separated without spaces)

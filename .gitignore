@@ -28,3 +28,4 @@ hs_err_pid*
 
 # Secret
 librebot.properties
+rss_feed.properties

@@ -31,7 +31,6 @@ public class Librebot {
     public static final String PROPERTIES_CHANNELS = "channels";
     public static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
     public static final String PROPERTIES_CTCP_VERSION = "ctcp_version";
-    public static final String PROPERTIES_RSS_FEED_URLS = "rss_feed_urls";
     private static final String PROPERTIES_FILE = "librebot.properties";
 
     public static void main(String[] args) {
@@ -98,8 +97,7 @@ public class Librebot {
         String nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD);
         if (!nickservPassword.isEmpty()) bot.addPlugin(new NickServPlugin(nickservPassword));
 
-        String rssFeedUrls = properties.getProperty(PROPERTIES_RSS_FEED_URLS);
-        if (!rssFeedUrls.isEmpty()) bot.addPlugin(new RssFeedPlugin(rssFeedUrls.split(",")));
+        bot.addPlugin(new RssFeedPlugin());
 
         // Commands
         bot.addPlugin(new UptimePlugin());
