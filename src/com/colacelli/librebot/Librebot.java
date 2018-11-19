@@ -7,6 +7,7 @@ import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin;
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
 import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
+import com.colacelli.ircbot.plugins.ircop.IRCopPlugin;
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
 import com.colacelli.ircbot.plugins.operator.OperatorPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
@@ -32,8 +33,11 @@ public class Librebot {
     private static final String PROPERTIES_NICK = "nick";
     private static final String PROPERTIES_CHANNELS = "channels";
     private static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
+    private static final String PROPERTIES_IRCOP_NAME = "ircop_name";
+    private static final String PROPERTIES_IRCOP_PASSWORD = "ircop_password";
     private static final String PROPERTIES_CTCP_VERSION = "ctcp_version";
     private static final String PROPERTIES_FILE = "librebot.properties";
+
 
     public static void main(String[] args) {
         Properties properties = loadProperties();
@@ -93,6 +97,7 @@ public class Librebot {
         bot.addPlugin(new AutoJoinPlugin(channels));
         bot.addPlugin(new AutoReconnectPlugin());
         bot.addPlugin(new CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)));
+        bot.addPlugin(new IRCopPlugin(properties.getProperty(PROPERTIES_IRCOP_NAME), properties.getProperty(PROPERTIES_IRCOP_PASSWORD)));
         bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new RejoinOnKickPlugin());
         bot.addPlugin(new RssFeedPlugin());

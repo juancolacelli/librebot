@@ -13,9 +13,11 @@ You need to rename librebot.properties.sample as librebot.properties
 * **password**: IRC server password
 * **ident**: Ident
 * **real_name**: Real name
-* **nick**: Nick
+* **name**: Nick
 * **channels**: Channels to auto-join (comma separated without spaces)
 * **ctcp_version**: CTCP Version response
+* **ircop_name**: IRCop name
+* **ircop_password**: IRCop password
 * **nickserv_password**: NickServ authentication password
 
 #### access.properties
