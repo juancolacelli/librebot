@@ -17,3 +17,6 @@ You need to rename librebot.properties.sample as librebot.properties
 * **channels**: Channels to auto-join (comma separated without spaces)
 * **ctcp_version**: CTCP Version response
 * **nickserv_password**: NickServ authentication password
+
+#### access.properties
+You need to rename access.properties.sample as access.properties and replace YOUR_NICKNAME with your nickname in uppercase

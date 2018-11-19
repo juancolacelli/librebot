@@ -1,12 +1,14 @@
 package com.colacelli.librebot;
 
 import com.colacelli.ircbot.IRCBot;
+import com.colacelli.ircbot.plugins.access.AccessPlugin;
 import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin;
 import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin;
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
 import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
+import com.colacelli.ircbot.plugins.operator.OperatorPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
 import com.colacelli.ircbot.plugins.rssfeed.RssFeedPlugin;
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin;
@@ -21,20 +23,20 @@ import java.util.ArrayList;
 import java.util.Properties;
 
 public class Librebot {
-    public static final String PROPERTIES_SERVER = "server";
-    public static final String PROPERTIES_PORT = "port";
-    public static final String PROPERTIES_SSL = "ssl";
-    public static final String PROPERTIES_PASSWORD = "password";
-    public static final String PROPERTIES_IDENT = "ident";
-    public static final String PROPERTIES_REAL_NAME = "real_name";
-    public static final String PROPERTIES_NICK = "nick";
-    public static final String PROPERTIES_CHANNELS = "channels";
-    public static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
-    public static final String PROPERTIES_CTCP_VERSION = "ctcp_version";
+    private static final String PROPERTIES_SERVER = "server";
+    private static final String PROPERTIES_PORT = "port";
+    private static final String PROPERTIES_SSL = "ssl";
+    private static final String PROPERTIES_PASSWORD = "password";
+    private static final String PROPERTIES_IDENT = "ident";
+    private static final String PROPERTIES_REAL_NAME = "real_name";
+    private static final String PROPERTIES_NICK = "nick";
+    private static final String PROPERTIES_CHANNELS = "channels";
+    private static final String PROPERTIES_NICKSERV_PASSWORD = "nickserv_password";
+    private static final String PROPERTIES_CTCP_VERSION = "ctcp_version";
     private static final String PROPERTIES_FILE = "librebot.properties";
 
     public static void main(String[] args) {
-        Properties properties = loadProperties(PROPERTIES_FILE);
+        Properties properties = loadProperties();
 
         IRCBot bot = new IRCBot();
 
@@ -46,7 +48,7 @@ public class Librebot {
         );
     }
 
-    private static Properties loadProperties(String propertiesFile) {
+    private static Properties loadProperties() {
         Properties properties = new Properties();
 
         try {
@@ -86,23 +88,19 @@ public class Librebot {
             channels.add(new Channel(channel));
         }
 
-        // Behaviour
-        bot.addPlugin(new AutoReconnectPlugin());
+        bot.addPlugin(new AccessPlugin());
+        bot.addPlugin(new ApertiumTranslatePlugin());
         bot.addPlugin(new AutoJoinPlugin(channels));
-        bot.addPlugin(new RejoinOnKickPlugin());
-        bot.addPlugin(new WebsiteTitlePlugin());
-
+        bot.addPlugin(new AutoReconnectPlugin());
         bot.addPlugin(new CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)));
+        bot.addPlugin(new OperatorPlugin());
+        bot.addPlugin(new RejoinOnKickPlugin());
+        bot.addPlugin(new RssFeedPlugin());
+        bot.addPlugin(new UptimePlugin());
+        bot.addPlugin(new WebsiteTitlePlugin());
 
         String nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD);
         if (!nickservPassword.isEmpty()) bot.addPlugin(new NickServPlugin(nickservPassword));
-
-        bot.addPlugin(new RssFeedPlugin());
-
-        // Commands
-        bot.addPlugin(new UptimePlugin());
-        // bot.addPlugin(new OperatorPlugin());
-        bot.addPlugin(new ApertiumTranslatePlugin());
 
         // Help
         bot.addPlugin(new HelpPlugin());
