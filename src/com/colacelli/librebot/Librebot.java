@@ -66,24 +66,24 @@ public class Librebot {
     }
 
     private static User buildUser(Properties properties) {
-        User.Builder userBuilder = new User.Builder();
-        userBuilder
+        User.Builder builder = new User.Builder();
+        builder
                 .setNick(properties.getProperty(PROPERTIES_NICK))
                 .setLogin(properties.getProperty(PROPERTIES_IDENT))
                 .setRealName(properties.getProperty(PROPERTIES_REAL_NAME));
 
-        return userBuilder.build();
+        return builder.build();
     }
 
     private static Server buildServer(Properties properties) {
-        Server.Builder serverBuilder = new Server.Builder();
-        serverBuilder
+        Server.Builder builder = new Server.Builder();
+        builder
                 .setHostname(properties.getProperty(PROPERTIES_SERVER))
                 .setPort(Integer.parseInt(properties.getProperty(PROPERTIES_PORT)))
                 .setSecure(Boolean.parseBoolean(properties.getProperty(PROPERTIES_SSL)))
                 .setPassword(properties.getProperty(PROPERTIES_PASSWORD));
 
-        return serverBuilder.build();
+        return builder.build();
     }
 
     private static void addPlugins(IRCBot bot, Properties properties) {
@@ -97,7 +97,7 @@ public class Librebot {
         bot.addPlugin(new AutoJoinPlugin(channels));
         bot.addPlugin(new AutoReconnectPlugin());
         bot.addPlugin(new CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)));
-        bot.addPlugin(new IRCopPlugin(properties.getProperty(PROPERTIES_IRCOP_NAME), properties.getProperty(PROPERTIES_IRCOP_PASSWORD)));
+        bot.addPlugin(new HelpPlugin());
         bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new RejoinOnKickPlugin());
         bot.addPlugin(new RssFeedPlugin());
@@ -107,7 +107,8 @@ public class Librebot {
         String nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD);
         if (!nickservPassword.isEmpty()) bot.addPlugin(new NickServPlugin(nickservPassword));
 
-        // Help
-        bot.addPlugin(new HelpPlugin());
+        String ircopName = properties.getProperty(PROPERTIES_IRCOP_NAME);
+        String ircopPassword = properties.getProperty(PROPERTIES_IRCOP_PASSWORD);
+        if (!ircopName.isEmpty() && !ircopPassword.isEmpty()) bot.addPlugin(new IRCopPlugin(ircopName, ircopPassword));
     }
 }
