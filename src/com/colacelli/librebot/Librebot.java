@@ -8,6 +8,7 @@ import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
 import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
 import com.colacelli.ircbot.plugins.ircop.IRCopPlugin;
+import com.colacelli.ircbot.plugins.loader.LoaderPlugin;
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
 import com.colacelli.ircbot.plugins.operator.OperatorPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
@@ -98,6 +99,7 @@ public class Librebot {
         bot.addPlugin(new AutoReconnectPlugin());
         bot.addPlugin(new CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)));
         bot.addPlugin(new HelpPlugin());
+        bot.addPlugin(new LoaderPlugin());
         bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new RejoinOnKickPlugin());
         bot.addPlugin(new RssFeedPlugin());
