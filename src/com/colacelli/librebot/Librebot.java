@@ -15,6 +15,7 @@ import com.colacelli.ircbot.plugins.nickserv.NickServPlugin;
 import com.colacelli.ircbot.plugins.operator.OperatorPlugin;
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin;
 import com.colacelli.ircbot.plugins.rssfeed.RssFeedPlugin;
+import com.colacelli.ircbot.plugins.thepiratebaysearch.ThePirateBaySearchPlugin;
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin;
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin;
 import com.colacelli.irclib.actors.Channel;
@@ -107,6 +108,7 @@ public class Librebot {
         bot.addPlugin(new OperatorPlugin());
         bot.addPlugin(new RejoinOnKickPlugin());
         bot.addPlugin(new RssFeedPlugin());
+        bot.addPlugin(new ThePirateBaySearchPlugin());
         bot.addPlugin(new UptimePlugin());
         bot.addPlugin(new WebsiteTitlePlugin());
 
