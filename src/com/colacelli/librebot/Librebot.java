@@ -5,6 +5,7 @@ import com.colacelli.ircbot.plugins.access.AccessPlugin;
 import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin;
 import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin;
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin;
+import com.colacelli.ircbot.plugins.autoresponse.AutoResponsePlugin;
 import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin;
 import com.colacelli.ircbot.plugins.duckduckgosearch.DuckDuckGoSearchPlugin;
 import com.colacelli.ircbot.plugins.help.HelpPlugin;
@@ -100,6 +101,7 @@ public class Librebot {
         bot.addPlugin(new ApertiumTranslatePlugin());
         bot.addPlugin(new AutoJoinPlugin(channels));
         bot.addPlugin(new AutoReconnectPlugin());
+        bot.addPlugin(new AutoResponsePlugin());
         bot.addPlugin(new CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)));
         bot.addPlugin(new DuckDuckGoSearchPlugin());
         bot.addPlugin(new HelpPlugin());
