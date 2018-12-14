@@ -21,4 +21,4 @@ You need to rename librebot.properties.sample as librebot.properties
 * **nickserv_password**: NickServ authentication password
 
 #### access.properties
-You need to rename access.properties.sample as access.properties and replace YOUR_NICKNAME with your nickname in uppercase
+You need to rename access.properties.sample as access.properties and replace your_nickname with your nickname in lowercase
