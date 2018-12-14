@@ -1,6 +1,6 @@
-server=irc.kernelpanic.com.ar
+hostname=irc.kernelpanic.com.ar
 port=6697
-secure=true
+ssl=true
 password=
 login=librebot
 real_name=GNU Librebot - https://gitlab.com/jic/librebot

@@ -26,9 +26,9 @@ import java.io.FileInputStream
 import java.util.*
 import kotlin.collections.ArrayList
 
-const val PROPERTIES_SERVER = "server"
+const val PROPERTIES_HOSTNAME = "hostname"
 const val PROPERTIES_PORT = "port"
-const val PROPERTIES_SECURE = "secure"
+const val PROPERTIES_SSL = "ssl"
 const val PROPERTIES_PASSWORD = "password"
 const val PROPERTIES_LOGIN = "login"
 const val PROPERTIES_REAL_NAME = "real_name"
@@ -45,49 +45,49 @@ fun main(args : Array<String>) {
     val properties = Properties()
     properties.load(FileInputStream(PROPERTIES_FILE))
 
-    val server = Server.Builder()
-            .setHostname(properties.getProperty(PROPERTIES_SERVER))
-            .setPort(properties.getProperty(PROPERTIES_PORT).toInt())
-            .setSecure(properties.getProperty(PROPERTIES_SECURE).toBoolean())
-            .setPassword(properties.getProperty(PROPERTIES_PASSWORD))
-            .build()
+    val server = Server(
+            properties.getProperty(PROPERTIES_HOSTNAME),
+            properties.getProperty(PROPERTIES_PORT).toInt(),
+            properties.getProperty(PROPERTIES_SSL).toBoolean(),
+            properties.getProperty(PROPERTIES_PASSWORD)
+    )
 
-    val user = User.Builder()
-            .setLogin(properties.getProperty(PROPERTIES_LOGIN))
-            .setRealName(properties.getProperty(PROPERTIES_REAL_NAME))
-            .setNick(properties.getProperty(PROPERTIES_NICK))
-            .build()
+    val user = User(
+            properties.getProperty(PROPERTIES_NICK),
+            properties.getProperty(PROPERTIES_LOGIN),
+            properties.getProperty(PROPERTIES_REAL_NAME)
+    )
+
+    val bot = IRCBot(server, user)
 
     val channels = ArrayList<Channel>()
     properties.getProperty(PROPERTIES_CHANNELS).split(",").forEach {
         channels.add(Channel(it))
     }
 
-    val librebot = IRCBot()
-
-    librebot.addPlugin(AccessPlugin())
-    librebot.addPlugin(ApertiumTranslatePlugin())
-    librebot.addPlugin(AutoJoinPlugin(channels))
-    librebot.addPlugin(AutoReconnectPlugin())
-    librebot.addPlugin(AutoResponsePlugin())
-    librebot.addPlugin(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)))
-    librebot.addPlugin(DuckDuckGoSearchPlugin())
-    librebot.addPlugin(HelpPlugin())
-    librebot.addPlugin(JoinPartPlugin())
-    librebot.addPlugin(PluginLoaderPlugin())
-    librebot.addPlugin(OperatorPlugin())
-    librebot.addPlugin(RejoinOnKickPlugin())
-    librebot.addPlugin(RSSFeedPlugin())
-    librebot.addPlugin(ThePirateBaySearchPlugin())
-    librebot.addPlugin(UptimePlugin())
-    librebot.addPlugin(WebsiteTitlePlugin())
+    bot.addPlugin(AccessPlugin())
+    bot.addPlugin(ApertiumTranslatePlugin())
+    bot.addPlugin(AutoJoinPlugin(channels))
+    bot.addPlugin(AutoReconnectPlugin())
+    bot.addPlugin(AutoResponsePlugin())
+    bot.addPlugin(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)))
+    bot.addPlugin(DuckDuckGoSearchPlugin())
+    bot.addPlugin(HelpPlugin())
+    bot.addPlugin(JoinPartPlugin())
+    bot.addPlugin(PluginLoaderPlugin())
+    bot.addPlugin(OperatorPlugin())
+    bot.addPlugin(RejoinOnKickPlugin())
+    bot.addPlugin(RSSFeedPlugin())
+    bot.addPlugin(ThePirateBaySearchPlugin())
+    bot.addPlugin(UptimePlugin())
+    bot.addPlugin(WebsiteTitlePlugin())
 
     val nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD)
-    if (nickservPassword.isNotBlank()) librebot.addPlugin(NickServPlugin(nickservPassword))
+    if (nickservPassword.isNotBlank()) bot.addPlugin(NickServPlugin(nickservPassword))
 
     val ircopName = properties.getProperty(PROPERTIES_IRCOP_NAME)
     val ircopPassword = properties.getProperty(PROPERTIES_IRCOP_PASSWORD)
-    if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) librebot.addPlugin(IRCopPlugin(ircopName, ircopPassword))
+    if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) bot.addPlugin(IRCopPlugin(ircopName, ircopPassword))
 
-    librebot.connect(server, user)
+    bot.connect()
 }
