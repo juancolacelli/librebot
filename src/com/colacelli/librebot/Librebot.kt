@@ -11,9 +11,9 @@ import com.colacelli.ircbot.plugins.duckduckgosearch.DuckDuckGoSearchPlugin
 import com.colacelli.ircbot.plugins.help.HelpPlugin
 import com.colacelli.ircbot.plugins.ircop.IRCopPlugin
 import com.colacelli.ircbot.plugins.joinpart.JoinPartPlugin
-import com.colacelli.ircbot.plugins.pluginloader.PluginLoaderPlugin
 import com.colacelli.ircbot.plugins.nickserv.NickServPlugin
 import com.colacelli.ircbot.plugins.operator.OperatorPlugin
+import com.colacelli.ircbot.plugins.pluginloader.PluginLoaderPlugin
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin
 import com.colacelli.ircbot.plugins.rssfeed.RSSFeedPlugin
 import com.colacelli.ircbot.plugins.thepiratebaysearch.ThePirateBaySearchPlugin
@@ -43,7 +43,7 @@ class Librebot {
         private const val PROPERTIES_FILE = "librebot.properties"
 
         @JvmStatic
-        fun main(args : Array<String>) {
+        fun main(args: Array<String>) {
 
             val properties = Properties()
             properties.load(FileInputStream(PROPERTIES_FILE))
