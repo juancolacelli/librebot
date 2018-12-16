@@ -49,22 +49,22 @@ class Librebot {
             properties.load(FileInputStream(PROPERTIES_FILE))
 
             val server = Server(
-                    properties.getProperty(PROPERTIES_HOSTNAME),
-                    properties.getProperty(PROPERTIES_PORT).toInt(),
-                    properties.getProperty(PROPERTIES_SSL).toBoolean(),
-                    properties.getProperty(PROPERTIES_PASSWORD)
+                    properties.getProperty(PROPERTIES_HOSTNAME, "irc.freenode.net"),
+                    properties.getProperty(PROPERTIES_PORT, "6697").toInt(),
+                    properties.getProperty(PROPERTIES_SSL, "true").toBoolean(),
+                    properties.getProperty(PROPERTIES_PASSWORD, "")
             )
 
             val user = User(
-                    properties.getProperty(PROPERTIES_NICK),
-                    properties.getProperty(PROPERTIES_LOGIN),
-                    properties.getProperty(PROPERTIES_REAL_NAME)
+                    properties.getProperty(PROPERTIES_NICK, "librebot"),
+                    properties.getProperty(PROPERTIES_LOGIN, "librebot"),
+                    properties.getProperty(PROPERTIES_REAL_NAME, "GNU Librebot - https://gitlab.com/jic/librebot")
             )
 
             val bot = IRCBot(server, user)
 
             val channels = ArrayList<Channel>()
-            properties.getProperty(PROPERTIES_CHANNELS).split(",").forEach {
+            properties.getProperty(PROPERTIES_CHANNELS, "#gnu").split(",").forEach {
                 channels.add(Channel(it))
             }
 
@@ -73,7 +73,7 @@ class Librebot {
             bot.addPlugin(AutoJoinPlugin(channels))
             bot.addPlugin(AutoReconnectPlugin())
             bot.addPlugin(AutoResponsePlugin())
-            bot.addPlugin(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION)))
+            bot.addPlugin(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/jic/librebot")))
             bot.addPlugin(DuckDuckGoSearchPlugin())
             bot.addPlugin(HelpPlugin())
             bot.addPlugin(JoinPartPlugin())
@@ -85,11 +85,11 @@ class Librebot {
             bot.addPlugin(UptimePlugin())
             bot.addPlugin(WebsiteTitlePlugin())
 
-            val nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD)
+            val nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD, "")
             if (nickservPassword.isNotBlank()) bot.addPlugin(NickServPlugin(nickservPassword))
 
-            val ircopName = properties.getProperty(PROPERTIES_IRCOP_NAME)
-            val ircopPassword = properties.getProperty(PROPERTIES_IRCOP_PASSWORD)
+            val ircopName = properties.getProperty(PROPERTIES_IRCOP_NAME, "")
+            val ircopPassword = properties.getProperty(PROPERTIES_IRCOP_PASSWORD, "")
             if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) bot.addPlugin(IRCopPlugin(ircopName, ircopPassword))
 
             bot.connect()
