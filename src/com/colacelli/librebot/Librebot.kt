@@ -4,6 +4,7 @@ import com.colacelli.ircbot.IRCBot
 import com.colacelli.ircbot.plugins.access.AccessPlugin
 import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin
 import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin
+import com.colacelli.ircbot.plugins.autoop.AutoOp
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin
 import com.colacelli.ircbot.plugins.autoresponse.AutoResponsePlugin
 import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin
@@ -71,6 +72,7 @@ class Librebot {
             bot.addPlugin(AccessPlugin())
             bot.addPlugin(ApertiumTranslatePlugin())
             bot.addPlugin(AutoJoinPlugin(channels))
+            bot.addPlugin(AutoOp())
             bot.addPlugin(AutoReconnectPlugin())
             bot.addPlugin(AutoResponsePlugin())
             bot.addPlugin(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/jic/librebot")))
