@@ -14,8 +14,7 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
-
-    compile("com.gitlab.jic:ircbot:gradle-SNAPSHOT")
+    compile("com.gitlab.jic:ircbot:0.2.0")
 }
 
 val compileKotlin: KotlinCompile by tasks
