@@ -2,13 +2,11 @@ package com.colacelli.librebot
 
 import com.colacelli.ircbot.IRCBot
 import com.colacelli.ircbot.plugins.access.AccessPlugin
-import com.colacelli.ircbot.plugins.apertiumtranslate.ApertiumTranslatePlugin
 import com.colacelli.ircbot.plugins.autojoin.AutoJoinPlugin
-import com.colacelli.ircbot.plugins.autoop.AutoOp
+import com.colacelli.ircbot.plugins.autoop.AutoOpPlugin
 import com.colacelli.ircbot.plugins.autoreconnect.AutoReconnectPlugin
 import com.colacelli.ircbot.plugins.autoresponse.AutoResponsePlugin
 import com.colacelli.ircbot.plugins.ctcpversion.CTCPVersionPlugin
-import com.colacelli.ircbot.plugins.duckduckgosearch.DuckDuckGoSearchPlugin
 import com.colacelli.ircbot.plugins.help.HelpPlugin
 import com.colacelli.ircbot.plugins.ircop.IRCopPlugin
 import com.colacelli.ircbot.plugins.joinpart.JoinPartPlugin
@@ -17,7 +15,9 @@ import com.colacelli.ircbot.plugins.operator.OperatorPlugin
 import com.colacelli.ircbot.plugins.pluginloader.PluginLoaderPlugin
 import com.colacelli.ircbot.plugins.rejoinonkick.RejoinOnKickPlugin
 import com.colacelli.ircbot.plugins.rssfeed.RSSFeedPlugin
-import com.colacelli.ircbot.plugins.thepiratebaysearch.ThePirateBaySearchPlugin
+import com.colacelli.ircbot.plugins.search.SearchPlugin
+import com.colacelli.ircbot.plugins.torrent.TorrentPlugin
+import com.colacelli.ircbot.plugins.translate.TranslatePlugin
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin
 import com.colacelli.irclib.actors.Channel
@@ -69,30 +69,30 @@ class Librebot {
                 channels.add(Channel(it))
             }
 
-            bot.addPlugin(AccessPlugin())
-            bot.addPlugin(ApertiumTranslatePlugin())
-            bot.addPlugin(AutoJoinPlugin(channels))
-            bot.addPlugin(AutoOp())
-            bot.addPlugin(AutoReconnectPlugin())
-            bot.addPlugin(AutoResponsePlugin())
-            bot.addPlugin(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/jic/librebot")))
-            bot.addPlugin(DuckDuckGoSearchPlugin())
-            bot.addPlugin(HelpPlugin())
-            bot.addPlugin(JoinPartPlugin())
-            bot.addPlugin(PluginLoaderPlugin())
-            bot.addPlugin(OperatorPlugin())
-            bot.addPlugin(RejoinOnKickPlugin())
-            bot.addPlugin(RSSFeedPlugin())
-            bot.addPlugin(ThePirateBaySearchPlugin())
-            bot.addPlugin(UptimePlugin())
-            bot.addPlugin(WebsiteTitlePlugin())
+            bot.pluginLoader.add(AccessPlugin())
+            bot.pluginLoader.add(AutoJoinPlugin(channels.toTypedArray()))
+            bot.pluginLoader.add(AutoOpPlugin())
+            bot.pluginLoader.add(AutoReconnectPlugin())
+            bot.pluginLoader.add(AutoResponsePlugin())
+            bot.pluginLoader.add(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/jic/librebot")))
+            bot.pluginLoader.add(HelpPlugin())
+            bot.pluginLoader.add(JoinPartPlugin())
+            bot.pluginLoader.add(OperatorPlugin())
+            bot.pluginLoader.add(PluginLoaderPlugin())
+            bot.pluginLoader.add(RejoinOnKickPlugin())
+            bot.pluginLoader.add(RSSFeedPlugin())
+            bot.pluginLoader.add(SearchPlugin())
+            bot.pluginLoader.add(TorrentPlugin())
+            bot.pluginLoader.add(TranslatePlugin())
+            bot.pluginLoader.add(UptimePlugin())
+            bot.pluginLoader.add(WebsiteTitlePlugin())
 
             val nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD, "")
-            if (nickservPassword.isNotBlank()) bot.addPlugin(NickServPlugin(nickservPassword))
+            if (nickservPassword.isNotBlank()) bot.pluginLoader.add(NickServPlugin(nickservPassword))
 
             val ircopName = properties.getProperty(PROPERTIES_IRCOP_NAME, "")
             val ircopPassword = properties.getProperty(PROPERTIES_IRCOP_PASSWORD, "")
-            if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) bot.addPlugin(IRCopPlugin(ircopName, ircopPassword))
+            if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) bot.pluginLoader.add(IRCopPlugin(ircopName, ircopPassword))
 
             bot.connect()
         }
