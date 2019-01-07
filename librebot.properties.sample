@@ -5,7 +5,6 @@ password=
 login=librebot
 real_name=GNU Librebot - https://gitlab.com/jic/librebot
 nick=librebot
-channels=#debug
 nickserv_password=
 ircop_name=
 ircop_password=

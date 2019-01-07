@@ -14,7 +14,6 @@ You need to rename librebot.properties.sample as librebot.properties
 * **ident**: Ident
 * **real_name**: Real name
 * **name**: Nick
-* **channels**: Channels to auto-join (comma separated without spaces)
 * **ctcp_version**: CTCP Version response
 * **ircop_name**: IRCop name
 * **ircop_password**: IRCop password
@@ -22,3 +21,6 @@ You need to rename librebot.properties.sample as librebot.properties
 
 #### access.properties
 You need to rename access.properties.sample as access.properties and replace your_nickname with your nickname in lowercase
+
+#### channels.properties
+You need to rename channels.properties.sample as channels.properties and replace #debug with your desired channels to join (comma separated without spaces)
