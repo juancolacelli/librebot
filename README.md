@@ -1,7 +1,7 @@
 # GNU Librebot
 
 ## Dependencies
-* **GNU IRC Bot**: https://gitlab.com/jic/ircbot
+* **GNU IRC Bot**: https://gitlab.com/juancolacelli/ircbot
 
 ### Configuration
 #### librebot.properties

@@ -19,12 +19,10 @@ import com.colacelli.ircbot.plugins.torrent.TorrentPlugin
 import com.colacelli.ircbot.plugins.translate.TranslatePlugin
 import com.colacelli.ircbot.plugins.uptime.UptimePlugin
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin
-import com.colacelli.irclib.actors.Channel
 import com.colacelli.irclib.actors.User
 import com.colacelli.irclib.connection.Server
 import java.io.FileInputStream
 import java.util.*
-import kotlin.collections.ArrayList
 
 class Librebot {
     companion object {
@@ -57,16 +55,18 @@ class Librebot {
             val user = User(
                     properties.getProperty(PROPERTIES_NICK, "librebot"),
                     properties.getProperty(PROPERTIES_LOGIN, "librebot"),
-                    properties.getProperty(PROPERTIES_REAL_NAME, "GNU Librebot - https://gitlab.com/jic/librebot")
+                    properties.getProperty(PROPERTIES_REAL_NAME, "GNU Librebot - https://gitlab.com/juancolacelli/librebot")
             )
 
             val bot = IRCBot(server, user)
+
+            bot.access.checkWithNickServ = false
 
             bot.pluginLoader.add(AccessPlugin())
             bot.pluginLoader.add(AutoOpPlugin())
             bot.pluginLoader.add(AutoReconnectPlugin())
             bot.pluginLoader.add(AutoResponsePlugin())
-            bot.pluginLoader.add(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/jic/librebot")))
+            bot.pluginLoader.add(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/juancolacelli/librebot")))
             bot.pluginLoader.add(HelpPlugin())
             bot.pluginLoader.add(JoinPartPlugin())
             bot.pluginLoader.add(OperatorPlugin())

@@ -17,7 +17,7 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
-    compile("com.gitlab.jic:ircbot:0.2.4") {
+    compile("com.gitlab.juancolacelli:ircbot:master-SNAPSHOT") {
         isChanging = true
     }
 }
