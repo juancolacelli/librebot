@@ -18,6 +18,7 @@ You need to rename librebot.properties.sample as librebot.properties
 * **ircop_name**: IRCop name
 * **ircop_password**: IRCop password
 * **nickserv_password**: NickServ authentication password
+* **check_access_with_nickserv**: Check if nicks are identified with NickServ when using commands
 
 #### access.properties
 You need to rename access.properties.sample as access.properties and replace your_nickname with your nickname in lowercase

@@ -33,6 +33,7 @@ class Librebot {
         private const val PROPERTIES_LOGIN = "login"
         private const val PROPERTIES_REAL_NAME = "real_name"
         private const val PROPERTIES_NICK = "nick"
+        private const val PROPERTIES_CHECK_ACCESS_WITH_NICKSERV = "check_access_with_nickserv"
         private const val PROPERTIES_NICKSERV_PASSWORD = "nickserv_password"
         private const val PROPERTIES_IRCOP_NAME = "ircop_name"
         private const val PROPERTIES_IRCOP_PASSWORD = "ircop_password"
@@ -60,7 +61,7 @@ class Librebot {
 
             val bot = IRCBot(server, user)
 
-            bot.access.checkWithNickServ = false
+            bot.access.checkWithNickServ = properties.getProperty(PROPERTIES_CHECK_ACCESS_WITH_NICKSERV, "true").toBoolean()
 
             bot.pluginLoader.add(AccessPlugin())
             bot.pluginLoader.add(AutoOpPlugin())
