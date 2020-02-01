@@ -1,0 +1,16 @@
+[
+  {
+    "hostname": "irc.freenode.net",
+    "port": 6697,
+    "ssl": true,
+    "password": "",
+    "nick": "librebot",
+    "login": "librebot",
+    "real_name": "GNU Librebot - https://gitlab.com/juancolacelli/librebot",
+    "ctcp_version": "GNU Librebot - https://gitlab.com/juancolacelli/librebot",
+    "nickserv_password": "",
+    "ircop_name": "",
+    "ircop_password": "",
+    "check_access_with_nickserv": true
+  }
+]

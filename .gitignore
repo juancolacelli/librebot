@@ -28,6 +28,13 @@ MANIFEST.MF
 # Properties
 *.properties
 
+# Json
+*.json
+
 # Gradle
 .gradle/
 build/
+
+# Misc
+.DS_Store
+.tags

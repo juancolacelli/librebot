@@ -5,19 +5,19 @@
 
 ### Configuration
 #### librebot.properties
-You need to rename librebot.properties.sample as librebot.properties
+You need to rename settings.json.sample as settings.json
 
-* **server**: IRC server hostname
+* **hostname**: IRC server hostname
 * **port**: IRC server port
 * **ssl**: Activate/Deactivate SSL
 * **password**: IRC server password
-* **ident**: Ident
+* **nick**: Nick
+* **login**: Ident
 * **real_name**: Real name
-* **name**: Nick
 * **ctcp_version**: CTCP Version response
+* **nickserv_password**: NickServ authentication password
 * **ircop_name**: IRCop name
 * **ircop_password**: IRCop password
-* **nickserv_password**: NickServ authentication password
 * **check_access_with_nickserv**: Check if nicks are identified with NickServ when using commands
 
 #### access.properties

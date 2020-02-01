@@ -21,73 +21,82 @@ import com.colacelli.ircbot.plugins.uptime.UptimePlugin
 import com.colacelli.ircbot.plugins.websitetitle.WebsiteTitlePlugin
 import com.colacelli.irclib.actors.User
 import com.colacelli.irclib.connection.Server
-import java.io.FileInputStream
-import java.util.*
+import com.google.gson.Gson
+import com.google.gson.JsonArray
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import java.nio.file.Files
+import java.nio.file.Paths
+
 
 class Librebot {
     companion object {
-        private const val PROPERTIES_HOSTNAME = "hostname"
-        private const val PROPERTIES_PORT = "port"
-        private const val PROPERTIES_SSL = "ssl"
-        private const val PROPERTIES_PASSWORD = "password"
-        private const val PROPERTIES_LOGIN = "login"
-        private const val PROPERTIES_REAL_NAME = "real_name"
-        private const val PROPERTIES_NICK = "nick"
-        private const val PROPERTIES_CHECK_ACCESS_WITH_NICKSERV = "check_access_with_nickserv"
-        private const val PROPERTIES_NICKSERV_PASSWORD = "nickserv_password"
-        private const val PROPERTIES_IRCOP_NAME = "ircop_name"
-        private const val PROPERTIES_IRCOP_PASSWORD = "ircop_password"
-        private const val PROPERTIES_CTCP_VERSION = "ctcp_version"
-        private const val PROPERTIES_FILE = "librebot.properties"
+        private val bots = ArrayList<IRCBot>()
+
+        private fun loadSettings(): JsonArray? {
+            val reader = Files.newBufferedReader(Paths.get("settings.json"))
+            return Gson().fromJson(reader, JsonArray::class.java)
+        }
 
         @JvmStatic
         fun main(args: Array<String>) {
+            loadSettings()?.forEach {
+                val settings = it.asJsonObject
 
-            val properties = Properties()
-            properties.load(FileInputStream(PROPERTIES_FILE))
+                val server = Server(
+                        settings.get("hostname").asString,
+                        settings.get("port").asInt,
+                        settings.get("ssl").asBoolean,
+                        settings.get("password").asString
+                )
 
-            val server = Server(
-                    properties.getProperty(PROPERTIES_HOSTNAME, "irc.freenode.net"),
-                    properties.getProperty(PROPERTIES_PORT, "6697").toInt(),
-                    properties.getProperty(PROPERTIES_SSL, "true").toBoolean(),
-                    properties.getProperty(PROPERTIES_PASSWORD, "")
-            )
+                val user = User(
+                        settings.get("nick").asString,
+                        settings.get("login").asString,
+                        settings.get("real_name").asString
+                )
 
-            val user = User(
-                    properties.getProperty(PROPERTIES_NICK, "librebot"),
-                    properties.getProperty(PROPERTIES_LOGIN, "librebot"),
-                    properties.getProperty(PROPERTIES_REAL_NAME, "GNU Librebot - https://gitlab.com/juancolacelli/librebot")
-            )
+                val bot = IRCBot(server, user)
 
-            val bot = IRCBot(server, user)
+                bot.access.checkWithNickServ = settings.get("check_access_with_nickserv").asBoolean
 
-            bot.access.checkWithNickServ = properties.getProperty(PROPERTIES_CHECK_ACCESS_WITH_NICKSERV, "true").toBoolean()
+                bot.pluginLoader.add(AccessPlugin())
+                bot.pluginLoader.add(AutoOpPlugin())
+                bot.pluginLoader.add(AutoReconnectPlugin())
+                bot.pluginLoader.add(AutoResponsePlugin())
+                bot.pluginLoader.add(CTCPVersionPlugin(settings.get("ctcp_version").asString))
+                bot.pluginLoader.add(HelpPlugin())
+                bot.pluginLoader.add(JoinPartPlugin())
+                bot.pluginLoader.add(OperatorPlugin())
+                bot.pluginLoader.add(PluginLoaderPlugin())
+                bot.pluginLoader.add(RejoinOnKickPlugin())
+                bot.pluginLoader.add(RSSFeedPlugin())
+                bot.pluginLoader.add(SearchPlugin())
+                bot.pluginLoader.add(TorrentPlugin())
+                bot.pluginLoader.add(TranslatePlugin())
+                bot.pluginLoader.add(UptimePlugin())
+                bot.pluginLoader.add(WebsiteTitlePlugin())
 
-            bot.pluginLoader.add(AccessPlugin())
-            bot.pluginLoader.add(AutoOpPlugin())
-            bot.pluginLoader.add(AutoReconnectPlugin())
-            bot.pluginLoader.add(AutoResponsePlugin())
-            bot.pluginLoader.add(CTCPVersionPlugin(properties.getProperty(PROPERTIES_CTCP_VERSION, "GNU Librebot - https://gitlab.com/juancolacelli/librebot")))
-            bot.pluginLoader.add(HelpPlugin())
-            bot.pluginLoader.add(JoinPartPlugin())
-            bot.pluginLoader.add(OperatorPlugin())
-            bot.pluginLoader.add(PluginLoaderPlugin())
-            bot.pluginLoader.add(RejoinOnKickPlugin())
-            bot.pluginLoader.add(RSSFeedPlugin())
-            bot.pluginLoader.add(SearchPlugin())
-            bot.pluginLoader.add(TorrentPlugin())
-            bot.pluginLoader.add(TranslatePlugin())
-            bot.pluginLoader.add(UptimePlugin())
-            bot.pluginLoader.add(WebsiteTitlePlugin())
+                val nickservPassword = settings.get("nickserv_password").asString
+                if (nickservPassword.isNotBlank()) bot.pluginLoader.add(NickServPlugin(nickservPassword))
 
-            val nickservPassword = properties.getProperty(PROPERTIES_NICKSERV_PASSWORD, "")
-            if (nickservPassword.isNotBlank()) bot.pluginLoader.add(NickServPlugin(nickservPassword))
+                val ircopName = settings.get("ircop_name").asString
+                val ircopPassword = settings.get("ircop_password").asString
+                if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) bot.pluginLoader.add(IRCopPlugin(ircopName, ircopPassword))
 
-            val ircopName = properties.getProperty(PROPERTIES_IRCOP_NAME, "")
-            val ircopPassword = properties.getProperty(PROPERTIES_IRCOP_PASSWORD, "")
-            if (ircopName.isNotBlank() && ircopPassword.isNotBlank()) bot.pluginLoader.add(IRCopPlugin(ircopName, ircopPassword))
+                bots.add(bot)
+            }
 
-            bot.connect()
+            bots.forEach {
+                // Last server does not use coroutines
+                if (bots.indexOf(it) < bots.size - 1) {
+                    GlobalScope.launch {
+                        it.connect()
+                    }
+                } else {
+                    it.connect()
+                }
+            }
         }
     }
 }

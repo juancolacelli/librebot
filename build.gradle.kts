@@ -17,6 +17,8 @@ repositories {
 
 dependencies {
     compile(kotlin("stdlib-jdk8"))
+    implementation("com.google.code.gson:gson:2.8.6")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.3.3")
     compile("com.gitlab.juancolacelli:ircbot:master-SNAPSHOT") {
         isChanging = true
     }
